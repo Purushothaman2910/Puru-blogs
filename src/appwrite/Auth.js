@@ -5,19 +5,19 @@ export class AuthService{
     client = new Client();
     account ;
     constructor(){
-        this.client.setProject(conf.appwriteProjectId);
+        this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
         this.account = new Account(this.client)
     }
     async createAccount({email , password , name}){
-        try {
-            let createAccount = await this.account.create( ID.unique , email , password , name )
+        try {    
+            let createAccount = await this.account.create( ID.unique() , email , password , name )         
             if(createAccount){
                 return this.login({email , password})
             } else {
                 return createAccount ;
             }
         } catch (error) {
-            console.log("Appwite error :: createAccount() ::" , error );                       
+            console.log("Appwite error :: createAccount() ::" , error.stack );                       
         }
     }
     async login({email , password}){
@@ -35,9 +35,9 @@ export class AuthService{
         }
         return null
     }
-    async logout(){
-        try {
-            return await this.account.deleteSession()
+    async logout(){       
+        try {  
+            return await this.account.deleteSession('current')
         } catch (error) {
             console.log("Appwite error :: logout() ::" , error );
         }
@@ -45,5 +45,6 @@ export class AuthService{
 }
 
 const authService = new AuthService()
+// authService.logout()
 
 export default authService

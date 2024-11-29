@@ -1,31 +1,34 @@
 import conf from "../conf/conf";
 import { Client , Databases , Storage , Query , ID } from "appwrite";
 
+
 export class Service{
     client = new Client() ;
     dataBases ;
     bucket ;
     constructor(){
-        this.client.setEndpoint(appwriteUrl).setProject(appwriteProjectId)
+        this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId)
         this.dataBases = new Databases(this.client)
         this.bucket = new Storage(this.client)
     }
     async getPost(slug){
         try {
-           return await this.dataBases.getDocument(appwriteDataBaseId , appwriteCollectionId , slug) 
+           return await this.dataBases.getDocument(conf.appwriteDataBaseId , conf.appwriteCollectionId , slug) 
         } catch (error) {
             console.log("An error in :: getPost)() :: " , error)
         }
     }
-    async getPosts(queries = [Query.equal("status" , ["active"])]){
+    async getPosts(queries = Query.equal("status" , true)){
         try {
-            return await this.dataBases.listDocuments(appwriteDataBaseId , appwriteCollectionId , queries )
+            return await this.dataBases.listDocuments(conf.appwriteDataBaseId , conf.appwriteCollectionId ,  queries)
         } catch (error) {
             console.log("An error in :: getPosts() :: " , error)
+            return false
         }
     }
-    async createPost(title , slug , content , featuresImage ,  userId){
-        try {
+    async createPost({title , slug , content , featuresImage ,  userId}){
+        try {        
+            console.log(slug);            
             return await this.dataBases.createDocument(conf.appwriteDataBaseId , conf.appwriteCollectionId , slug , { title , content , featuresImage , userId })
         } catch (error) {
             console.log("An error in :: createPost() :: " , error)
@@ -64,6 +67,7 @@ export class Service{
     }
     async getFilePreview(id){
         try {
+            console.log(this.bucket.getFilePreview(conf.appwriteBucketId , id).href);            
             return await this.bucket.getFilePreview(conf.appwriteBucketId , id).href
         } catch (error) {
             console.log("An error in :: getFilePreview() :: " , error)
