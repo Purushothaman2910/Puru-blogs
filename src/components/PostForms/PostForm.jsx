@@ -15,6 +15,7 @@ function PostForm({post}) {
      content : post?.content || "" ,
      status : post?.status || "active"
   });
+
   const navigate = useNavigate() ;
   let userData = useSelector((state)=> state.auth.userData)
   const submit = async(data) => {
@@ -96,7 +97,7 @@ function PostForm({post}) {
                 className='rounded-lg'
                 />
               <Select 
-              options = {["active" , "inactive"]} 
+              options = {[{name : "Active" , value : "active" },{name : "Inactive" , value : "inactive" }]} 
               className = "mb-4"
               {...register("status",{required:true})}              
               />

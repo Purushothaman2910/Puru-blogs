@@ -11,26 +11,30 @@ function Post() {
   let {slug} = useParams()
   const navigate = useNavigate() 
   const userData = useSelector((state)=> state.auth.userData)
-  const isAuthor = post && userData ? (post.$id === userData.$id) : false ;
+  const [isAuthor , setIsAuthor] = useState(false)
+  // const isAuthor = post && userData ? (post.$id === userData.$id) : false ;
   function deletePost(){
     appwriteServices.deletePost(post.$id).then((status)=>{ 
       if(status){
-        appwriteServices.deleteFile(post.featuredImage)
+        appwriteServices.deleteFile(post.featuresImage)
         navigate('/')
       }
      })
   }
 
+  async function fetchData(slug){
+    let response = await appwriteServices.getPost(slug) ;
+    if(response){
+      setPost(response) 
+      setIsAuthor(response.userId === userData.$id)    
+      let imageUrl = await appwriteServices.getFilePreview(response.featuresImage)
+      setImage(imageUrl)
+    }
+  }
+
   useEffect(()=>{
     if(slug){
-      appwriteServices.getPost(slug).then((post)=>{      
-        if(post){                    
-          setPost(post)
-          setImage(appwriteServices.getFilePreview(post.featuresImage))
-        }else{
-          navigate('/')
-        }
-      })
+      fetchData(slug)
     }
   } , [slug , navigate])
 

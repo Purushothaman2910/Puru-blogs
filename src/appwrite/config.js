@@ -66,8 +66,7 @@ export class Service{
         }
     }
     async getFilePreview(id){
-        try {
-            console.log(this.bucket.getFilePreview(conf.appwriteBucketId , id).href);            
+        try {           
             return await this.bucket.getFilePreview(conf.appwriteBucketId , id).href
         } catch (error) {
             console.log("An error in :: getFilePreview() :: " , error)

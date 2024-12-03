@@ -18,7 +18,7 @@ function AllPost() {
   return (post.length !== 0) ? (<div className='w-full py-8'>
     <Container>
       <div className="flex flex-wrap">
-        {posts.map((post) => (
+        {post.map((post) => (
           <div className="p-2 w-1/4" key={post.$id}>
             <PostCard {...post} />
           </div>

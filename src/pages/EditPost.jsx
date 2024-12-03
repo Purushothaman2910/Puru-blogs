@@ -9,7 +9,7 @@ function EditPost() {
   let navigate = useNavigate() ;
   useEffect(()=>{
     if(slug){
-      appwriteServices.getPost().then((post)=>{
+      appwriteServices.getPost(slug).then((post)=>{
         if(post){
           setPost(post)
         }else{
