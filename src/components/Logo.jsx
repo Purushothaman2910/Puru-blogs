@@ -3,7 +3,7 @@ import {LogoImage} from '../assets'
 
 function Logo({width = "100%" , className}) {
   return (
-    <img className={className} src='' alt="Logo image" style={{width : width}}/>
+    <h1 className='text-3xl font-bold font-mono '> Puru blogs</h1>
   )
 }
 

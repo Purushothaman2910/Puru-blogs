@@ -34,7 +34,7 @@ export class Service{
             console.log("An error in :: createPost() :: " , error)
         }
     }
-    async updatePost(data , slug){
+    async updatePost(slug,data){
         try {
             return await this.dataBases.updateDocument(conf.appwriteDataBaseId , conf.appwriteCollectionId , slug , data)
         } catch (error) {

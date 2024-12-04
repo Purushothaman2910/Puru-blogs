@@ -1,4 +1,4 @@
-import React , {useCallback, useEffect} from 'react'
+import React , {useCallback, useEffect, useState} from 'react'
 import { useForm } from 'react-hook-form'
 import Button from '../Button'
 import Inputs from '../Inputs'
@@ -16,17 +16,24 @@ function PostForm({post}) {
      status : post?.status || "active"
   });
 
+  const [image,setImage] = useState("")
+
   const navigate = useNavigate() ;
   let userData = useSelector((state)=> state.auth.userData)
   const submit = async(data) => {
-    if(post){
+    if(post){    
       let file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null ;
       if(file){
-        appwriteService.deleteFile(post.featuredImage)
-      }
+        appwriteService.deleteFile(post.featuresImage)
+      }         
+      data = {
+        content : data.content ,
+        status : data.status ,
+        title : data.title 
+      } 
       const dbPost = await appwriteService.updatePost(post.$id , {
         ...data ,
-        featuredImage : file ? file.$id : undefined 
+        featuresImage : file ? file.$id : undefined 
       })
       if(dbPost){
         navigate(`/post/${dbPost.$id}`)
@@ -34,9 +41,8 @@ function PostForm({post}) {
     }else{
       const file = await appwriteService.uploadFile(data.image[0]) ;
       if(file){
-        const fileId = file.$id ;
-        data.featuresImage = fileId ;
-        console.log("data :",data);         
+        const fileId = file.$id ;    
+        data.featuresImage = fileId ;       
         const dbPost = await appwriteService.createPost({...data , userId : userData.$id })
         if(dbPost){
           navigate(`/post/${dbPost.$id}`)
@@ -57,6 +63,22 @@ function PostForm({post}) {
       }
     })
   },[watch,setValue,slugTransform])
+
+  useEffect(()=>{   
+    async function getImage(id) { 
+      let imageUrl = await appwriteService.getFilePreview(id);
+      setImage(imageUrl);
+    }
+    if(post){
+      console.log("running");      
+      setValue('title' , post.title) ;
+      setValue('content' , post.content) ;
+      setValue('slug' , post.$id) ;
+      setValue('status' , post.status) ;
+      getImage(post.featuresImage)
+    }
+  },[])
+
   return (
     <form 
     onSubmit={handleSubmit(submit)} 
@@ -92,12 +114,12 @@ function PostForm({post}) {
             post && (
               <div className='w-full mb-4'>
                 <img 
-                src={appwriteService.getFilePreview(post.featuredImage)} 
+                src={image} 
                 alt={post.title} 
                 className='rounded-lg'
                 />
               <Select 
-              options = {[{name : "Active" , value : "active" },{name : "Inactive" , value : "inactive" }]} 
+              options = {[{name : "Active" , value : true },{name : "Inactive" , value : false }]} 
               className = "mb-4"
               {...register("status",{required:true})}              
               />
