@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 function ListItem({children}) {
     return (
-      <li className='flex items-center px-6 py-1 duration-200 hover:bg-blue-100 rounded hover:shadow-slate-400 hover:hadow-lg' >
+      <li className='flex font-semibold text-xl items-center px-6 py-1 duration-200 hover:bg-blue-100 rounded hover:shadow-slate-400 hover:hadow-lg' >
           {children}
       </li> 
     )
@@ -53,7 +53,7 @@ function HeaderDiv() {
                         <Logo className='rounded object-cover h-[60px] w-[50px]' width='75px'/>
                     </Link>
                 </div>
-                <ul className='flex flex-grow justify-evenly'>
+                <ul className='flex flex-grow justify-around'>
                     {
                         navigationItems.filter(item => item.active).map(({name , slug , active} , i ) => (
                             <ListItem key={i}>                                
