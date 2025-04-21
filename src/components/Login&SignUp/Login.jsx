@@ -1,17 +1,17 @@
 import authService from "../../appwrite/Auth"
-import {Link, useNavigate} from "react-router-dom"
-import React, {useState} from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import React, { useState } from 'react'
 import Button from "../Button"
 import Input from '../Inputs'
 import Logo from "../Logo"
-import {useForm} from "react-hook-form"
-import {useDispatch} from "react-redux"
-import {login as authLogin} from "../../Store/AuthSlice"
+import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
+import { login as authLogin } from "../../Store/AuthSlice"
 
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const { register, handleSubmit } = useForm()
     const [error, setError] = useState("")
 
     const login = async (data) => {
@@ -20,7 +20,7 @@ function Login() {
             const session = await authService.login(data)
             if (session) {
                 const userData = await authService.getCurrentUser()
-                if (userData) dispatch(authLogin({userData}))
+                if (userData) dispatch(authLogin({ userData }))
                 navigate("/")
             }
         } catch (error) {
@@ -55,7 +55,7 @@ function Login() {
                             type="email"
                             {...register("email", {
                                 required: true,
-                                
+
                             })}
                         />
                         <Input

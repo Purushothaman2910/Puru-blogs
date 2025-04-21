@@ -2,7 +2,7 @@ import React from 'react'
 import appwriteService from "../appwrite/config"
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { Container , PostCard } from '../components'
+import { Container, PostCard } from '../components'
 
 function Home() {
 
@@ -18,12 +18,12 @@ function Home() {
   if (posts.length === 0) {
     return (
       <div className='w-full py-8'>
-      <Container>
-        <div className="flex flex-wrap">
-          <h1>Login to read posts</h1>
-        </div>
-      </Container>
-    </div>
+        <Container>
+          <div className="flex flex-wrap">
+            <h1>Login to read posts</h1>
+          </div>
+        </Container>
+      </div>
     )
   }
 

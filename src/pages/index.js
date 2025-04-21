@@ -7,11 +7,11 @@ import SignUp from "./SignUp";
 import Post from "./Post";
 
 export {
-    AddPost ,
-    AllPost ,
-    EditPost ,
-    Home ,
-    Login ,
-    SignUp ,
-    Post ,
+    AddPost,
+    AllPost,
+    EditPost,
+    Home,
+    Login,
+    SignUp,
+    Post,
 }

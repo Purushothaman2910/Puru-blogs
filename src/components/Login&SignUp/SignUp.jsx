@@ -1,6 +1,6 @@
-import React , {useState} from 'react'
+import React, { useState } from 'react'
 import authService from '../../appwrite/Auth'
-import { Link , useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Button from '../Button'
 import Inputs from '../Inputs'
@@ -9,21 +9,21 @@ import { useForm } from 'react-hook-form'
 import { login } from '../../Store/AuthSlice'
 
 function SignUp() {
-    const navigate = useNavigate() ;
+    const navigate = useNavigate();
     const dispatch = useDispatch()
-    let [error , setError] = useState('')
-    const { register , handleSubmit } = useForm();
-    let create = async (data) =>{
+    let [error, setError] = useState('')
+    const { register, handleSubmit } = useForm();
+    let create = async (data) => {
         try {
             console.log(data);
-            let userData =  await authService.createAccount(data)
-            if(userData){
+            let userData = await authService.createAccount(data)
+            if (userData) {
                 const userData = await authService.getCurrentUser()
-                if(userData) {
-                    dispatch(login({userData}))
+                if (userData) {
+                    dispatch(login({ userData }))
                     navigate('/')
                 }
-            }         
+            }
         } catch (error) {
             setError(error.message)
         }
@@ -57,7 +57,7 @@ function SignUp() {
                         <Inputs
                             {...register("email", {
                                 required: true,
-                                
+
                             })}
                             label="Email : "
                             placeholder="Email Address"

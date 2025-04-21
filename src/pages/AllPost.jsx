@@ -1,20 +1,20 @@
-import React , {useState , useEffect} from 'react'
-import { Container , PostCard } from '../components'
+import React, { useState, useEffect } from 'react'
+import { Container, PostCard } from '../components'
 import appwriteServices from '../appwrite/config'
 import { useNavigate } from 'react-router-dom'
 
 function AllPost() {
-  let [post , setPost] = useState([])
+  let [post, setPost] = useState([])
   let navigate = useNavigate()
-  useEffect(()=>{
+  useEffect(() => {
     appwriteServices.getPosts([]).then((posts) => {
-      if(posts){
+      if (posts) {
         setPost(posts.documents)
-      }else{
+      } else {
         navigate("/")
       }
-    } )
-  } , [])
+    })
+  }, [])
   return (post.length !== 0) ? (<div className='w-full py-8'>
     <Container>
       <div className="flex flex-wrap">

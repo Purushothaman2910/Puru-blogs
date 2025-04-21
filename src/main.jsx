@@ -5,65 +5,65 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './Store/Store.js'
-import { AllPost, Home ,Login, SignUp , EditPost ,AddPost, Post  } from './pages'
+import { AllPost, Home, Login, SignUp, EditPost, AddPost, Post } from './pages'
 import { AuthLayout } from './components'
 let router = createBrowserRouter([
   {
-    path : '/' ,
-    element : <App /> ,
-    children : [
+    path: '/',
+    element: <App />,
+    children: [
       {
-        path : "/" ,
-        element : <Home />
-      } ,
+        path: "/",
+        element: <Home />
+      },
       {
-        path : "/login" ,
-        element : (
-        <AuthLayout authentication={false}>
-          <Login />
-        </AuthLayout>
-      )
-      } ,
+        path: "/login",
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        )
+      },
       {
-        path : '/signup' ,
-        element : (
+        path: '/signup',
+        element: (
           <AuthLayout authentication={false}>
             <SignUp />
           </AuthLayout>
         )
-      } ,
+      },
       {
-        path : '/all-post' ,
-        element : (
+        path: '/all-post',
+        element: (
           <AuthLayout authentication>
             <AllPost />
           </AuthLayout>
         )
-      } ,
+      },
       {
-        path : '/add-post' ,
-        element : (
+        path: '/add-post',
+        element: (
           <AuthLayout authentication>
             <AddPost />
           </AuthLayout>
         )
-      } ,
+      },
       {
-        path : '/edit-post/:slug' ,
-        element : (
+        path: '/edit-post/:slug',
+        element: (
           <AuthLayout authentication>
             <EditPost />
           </AuthLayout>
         )
-      } ,
+      },
       {
-        path : '/post/:slug' ,
-        element : (
+        path: '/post/:slug',
+        element: (
           <AuthLayout authentication>
             <Post />
           </AuthLayout>
         )
-      } ,
+      },
     ]
   }
 ])
@@ -72,6 +72,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
-    </Provider>    
+    </Provider>
   </StrictMode>,
 )
